@@ -187,7 +187,7 @@ Taken together, these publications provide a credible standards-based foundation
 
 # **The ZAF Willamette Reference Implementation**
 
-To ground the architecture in working code, ZTUnion has released ZAF Willamette, a reference implementation of the ZAF model, under the BSD 3-Clause Clear License at `github.com/ztunion/zaf/willamette`.
+To ground the architecture in working code, ZTUnion has released ZAF Willamette, a reference implementation of the ZAF model, under the BSD 3-Clause Clear License at `github.com/ztunion/ZAF-Willamette`.
 
 Willamette is explicitly scoped as an illustration of the ZAF model, not a canonical or production-complete implementation. It ships with a set of example authenticator signals (ASN, JA4 TLS fingerprint, IP CIDR range, country, and an allowed time window) chosen to demonstrate the pattern. Implementors can create and register their own authenticators using different signals entirely. These shipped signals are passive and contextual only. Willamette does not include the hardware-anchored active challenge-response path described earlier, under The ZAF Approach, and readers evaluating it as a benchmark of the full authorization model should account for that gap.
 
