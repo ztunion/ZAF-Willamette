@@ -1,0 +1,69 @@
+﻿//
+// Copyright Â© 2026 ZTUnion LLC. All rights reserved.
+//
+
+syntax = "proto3";
+
+package willamette.cms.v1;
+
+service CmsService {
+  rpc CreateApiKey(CreateApiKeyRequest) returns (CreateApiKeyResponse);
+  rpc GetKeyPolicy(GetKeyPolicyRequest) returns (GetKeyPolicyResponse);
+  rpc ResolveApiKey(ResolveApiKeyRequest) returns (ResolveApiKeyResponse);
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse);
+}
+
+message CreateApiKeyRequest {
+  string provider = 1;
+  string real_api_key = 2;
+  Policy policy = 3;
+}
+
+message CreateApiKeyResponse {
+  string virtual_api_key = 1;
+  string provider = 2;
+}
+
+message GetKeyPolicyRequest {
+  string virtual_api_key = 1;
+}
+
+message GetKeyPolicyResponse {
+  bool found = 1;
+  string virtual_api_key = 2;
+  string real_api_key = 3;
+  string provider = 4;
+  Policy policy = 5;
+}
+
+message ResolveApiKeyRequest {
+  string virtual_api_key = 1;
+}
+
+message ResolveApiKeyResponse {
+  bool found = 1;
+  string virtual_api_key = 2;
+  string real_api_key = 3;
+  string provider = 4;
+  Policy policy = 5;
+}
+
+message ListPoliciesRequest {}
+
+message ListPoliciesResponse {
+  repeated GetKeyPolicyResponse items = 1;
+}
+
+message Policy {
+  bool ip_validation_enabled = 1;
+  repeated string allowed_ip_ranges = 2;
+
+  bool ja3_validation_enabled = 3;
+  repeated string allowed_ja3 = 4;
+
+  bool ja4_validation_enabled = 5;
+  repeated string allowed_ja4 = 6;
+
+  bool country_validation_enabled = 7;
+  repeated string allowed_countries = 8;
+}

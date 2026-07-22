@@ -1,0 +1,861 @@
+﻿<!--
+Copyright Â© 2026 ZTUnion LLC. All rights reserved.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Willamette CMS Console</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .topbar {
+            height: 64px;
+            background: #111827;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .logout-button {
+            background: #374151;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        .heading-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+
+        .heading {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subheading {
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .card {
+            background: white;
+            padding: 26px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #374151;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        .primary-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .secondary-button {
+            background: #e5e7eb;
+            color: #111827;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        .danger-button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .policy-row {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+            background: #fafafa;
+        }
+
+        .policy-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .policy-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .policy-description {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .policy-body {
+            margin-top: 16px;
+            display: none;
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: -10px;
+            margin-bottom: 16px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #d1d5db;
+            transition: .2s;
+            border-radius: 999px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .2s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+        }
+
+        .switch input:checked + .slider {
+            background-color: #2563eb;
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .message {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        th {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 3px 6px;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .inline-form {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div class="brand">
+            Willamette CMS Console
+        </div>
+
+        <form method="post" action="/logout">
+            <button class="logout-button" type="submit">
+                Logout
+            </button>
+        </form>
+    </div>
+
+    <div class="container">
+
+        <div class="heading-row">
+            <div>
+                <div class="heading">
+                    API Key Configuration
+                </div>
+
+                <div class="subheading">
+                    Generate provider-compatible virtual API keys and configure validation policies.
+                </div>
+            </div>
+
+            {% if not edit_item %}
+            <button
+                class="primary-button"
+                type="button"
+                onclick="showAddApiKeyForm()"
+            >
+                Add API Key
+            </button>
+            {% endif %}
+        </div>
+
+        {% if message %}
+        <div class="message">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        {% if created_key %}
+        <div class="success">
+            Virtual API Key:
+            <code>{{ created_key }}</code>
+        </div>
+        {% endif %}
+
+        {% if edit_item %}
+        <div class="card">
+
+            <div class="section-title">
+                Edit API Key
+            </div>
+
+            <form method="post" action="/api-keys/{{ edit_item.virtual_api_key }}/edit">
+
+                <label>
+                    Virtual API Key
+                </label>
+
+                <input
+                    type="text"
+                    value="{{ edit_item.virtual_api_key }}"
+                    disabled
+                >
+
+                <label>
+                    Provider
+                </label>
+
+                <select name="provider" required>
+                    <option value="openai" {% if edit_item.provider == "openai" %}selected{% endif %}>
+                        OpenAI - sk-...
+                    </option>
+                    <option value="huggingface" {% if edit_item.provider == "huggingface" %}selected{% endif %}>
+                        HuggingFace - hf_...
+                    </option>
+                    <option value="anthropic" {% if edit_item.provider == "anthropic" %}selected{% endif %}>
+                        Anthropic - sk-ant-...
+                    </option>
+                    <option value="other" {% if edit_item.provider == "other" %}selected{% endif %}>
+                        Other - vk-...
+                    </option>
+                </select>
+
+                <label>
+                    Status
+                </label>
+
+                <select name="status">
+                    <option value="active" {% if edit_item.status == "active" %}selected{% endif %}>
+                        Active
+                    </option>
+                    <option value="disabled" {% if edit_item.status == "disabled" %}selected{% endif %}>
+                        Disabled
+                    </option>
+                </select>
+
+                <label>
+                    Replace Real API Key
+                </label>
+
+                <input
+                    type="password"
+                    name="real_api_key"
+                    placeholder="Leave blank to keep existing real API key"
+                >
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">IP Validation</div>
+                            <div class="policy-description">
+                                Allow requests only from configured source IP ranges.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="ip_validation_enabled"
+                                {% if edit_item.policy.ip_validation_enabled %}checked{% endif %}
+                                onchange="togglePolicyField(this, 'editIpPolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div
+                        id="editIpPolicyBody"
+                        class="policy-body"
+                        {% if edit_item.policy.ip_validation_enabled %}style="display:block"{% endif %}
+                    >
+                        <label>Allowed IP Ranges</label>
+                        <input
+                            type="text"
+                            name="allowed_ip_ranges"
+                            value="{{ edit_item.policy.allowed_ip_ranges | join(',') }}"
+                        >
+                    </div>
+                </div>
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">JA3 Validation</div>
+                            <div class="policy-description">
+                                Validate JA3 fingerprint sent by MITM proxy.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="ja3_validation_enabled"
+                                {% if edit_item.policy.ja3_validation_enabled %}checked{% endif %}
+                                onchange="togglePolicyField(this, 'editJa3PolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div
+                        id="editJa3PolicyBody"
+                        class="policy-body"
+                        {% if edit_item.policy.ja3_validation_enabled %}style="display:block"{% endif %}
+                    >
+                        <label>Allowed JA3 Values</label>
+                        <input
+                            type="text"
+                            name="allowed_ja3"
+                            value="{{ edit_item.policy.allowed_ja3 | join(',') }}"
+                        >
+                    </div>
+                </div>
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">JA4 Validation</div>
+                            <div class="policy-description">
+                                Validate JA4 fingerprint sent by MITM proxy.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="ja4_validation_enabled"
+                                {% if edit_item.policy.ja4_validation_enabled %}checked{% endif %}
+                                onchange="togglePolicyField(this, 'editJa4PolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div
+                        id="editJa4PolicyBody"
+                        class="policy-body"
+                        {% if edit_item.policy.ja4_validation_enabled %}style="display:block"{% endif %}
+                    >
+                        <label>Allowed JA4 Values</label>
+                        <input
+                            type="text"
+                            name="allowed_ja4"
+                            value="{{ edit_item.policy.allowed_ja4 | join(',') }}"
+                        >
+                    </div>
+                </div>
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">Country Validation</div>
+                            <div class="policy-description">
+                                Restrict requests to selected countries/regions.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="country_validation_enabled"
+                                {% if edit_item.policy.country_validation_enabled %}checked{% endif %}
+                                onchange="togglePolicyField(this, 'editCountryPolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div
+                        id="editCountryPolicyBody"
+                        class="policy-body"
+                        {% if edit_item.policy.country_validation_enabled %}style="display:block"{% endif %}
+                    >
+                        <label>Allowed Countries</label>
+
+                        <select name="allowed_countries" multiple size="8">
+                            {% for code, name in [
+                                ("AE", "United Arab Emirates"),
+                                ("US", "United States"),
+                                ("CA", "Canada"),
+                                ("GB", "United Kingdom"),
+                                ("IN", "India"),
+                                ("SG", "Singapore"),
+                                ("MY", "Malaysia"),
+                                ("TH", "Thailand"),
+                                ("ID", "Indonesia"),
+                                ("VN", "Vietnam"),
+                                ("JP", "Japan"),
+                                ("KR", "South Korea"),
+                                ("DE", "Germany"),
+                                ("FR", "France"),
+                                ("AU", "Australia")
+                            ] %}
+                            <option
+                                value="{{ code }}"
+                                {% if code in edit_item.policy.allowed_countries %}selected{% endif %}
+                            >
+                                {{ code }} - {{ name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <button class="primary-button" type="submit">
+                    Save Changes
+                </button>
+
+                <a class="secondary-button" href="/dashboard">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+        {% endif %}
+
+        <div id="addApiKeyCard" class="card {% if not edit_item %}hidden{% endif %}">
+
+            {% if not edit_item %}
+            <div class="section-title">
+                Add API Key
+            </div>
+
+            <form method="post" action="/api-keys">
+
+                <label>
+                    Provider
+                </label>
+
+                <select name="provider" required>
+                    <option value="openai">OpenAI - sk-...</option>
+                    <option value="huggingface">HuggingFace - hf_...</option>
+                    <option value="anthropic">Anthropic - sk-ant-...</option>
+                    <option value="other">Other - vk-...</option>
+                </select>
+
+                <label>
+                    Real API Key
+                </label>
+
+                <input
+                    type="password"
+                    name="real_api_key"
+                    placeholder="Enter real provider API key"
+                    required
+                >
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">IP Validation</div>
+                            <div class="policy-description">
+                                Allow requests only from configured source IP ranges.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="ip_validation_enabled"
+                                onchange="togglePolicyField(this, 'ipPolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div id="ipPolicyBody" class="policy-body">
+                        <label>Allowed IP Ranges</label>
+                        <input
+                            type="text"
+                            name="allowed_ip_ranges"
+                            placeholder="99.233.12.0/24,10.0.0.0/8"
+                        >
+                    </div>
+                </div>
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">JA3 Validation</div>
+                            <div class="policy-description">
+                                Validate JA3 fingerprint sent by MITM proxy.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="ja3_validation_enabled"
+                                onchange="togglePolicyField(this, 'ja3PolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div id="ja3PolicyBody" class="policy-body">
+                        <label>Allowed JA3 Values</label>
+                        <input
+                            type="text"
+                            name="allowed_ja3"
+                            placeholder="ja3hash1,ja3hash2"
+                        >
+                    </div>
+                </div>
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">JA4 Validation</div>
+                            <div class="policy-description">
+                                Validate JA4 fingerprint sent by MITM proxy.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="ja4_validation_enabled"
+                                onchange="togglePolicyField(this, 'ja4PolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div id="ja4PolicyBody" class="policy-body">
+                        <label>Allowed JA4 Values</label>
+                        <input
+                            type="text"
+                            name="allowed_ja4"
+                            placeholder="ja4value1,ja4value2"
+                        >
+                    </div>
+                </div>
+
+                <div class="policy-row">
+                    <div class="policy-header">
+                        <div>
+                            <div class="policy-title">Country Validation</div>
+                            <div class="policy-description">
+                                Restrict requests to selected countries/regions.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                name="country_validation_enabled"
+                                onchange="togglePolicyField(this, 'countryPolicyBody')"
+                            >
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div id="countryPolicyBody" class="policy-body">
+                        <label>Allowed Countries</label>
+
+                        <select name="allowed_countries" multiple size="8">
+                            <option value="AE">AE - United Arab Emirates</option>
+                            <option value="US">US - United States</option>
+                            <option value="CA">CA - Canada</option>
+                            <option value="GB">GB - United Kingdom</option>
+                            <option value="IN">IN - India</option>
+                            <option value="SG">SG - Singapore</option>
+                            <option value="MY">MY - Malaysia</option>
+                            <option value="TH">TH - Thailand</option>
+                            <option value="ID">ID - Indonesia</option>
+                            <option value="VN">VN - Vietnam</option>
+                            <option value="JP">JP - Japan</option>
+                            <option value="KR">KR - South Korea</option>
+                            <option value="DE">DE - Germany</option>
+                            <option value="FR">FR - France</option>
+                            <option value="AU">AU - Australia</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="primary-button" type="submit">
+                    Generate Virtual API Key
+                </button>
+
+                <button
+                    class="secondary-button"
+                    type="button"
+                    onclick="hideAddApiKeyForm()"
+                >
+                    Cancel
+                </button>
+
+            </form>
+            {% endif %}
+
+        </div>
+
+        <div class="card">
+
+            <div class="section-title">
+                Configured API Keys
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Virtual API Key</th>
+                        <th>Provider</th>
+                        <th>Status</th>
+                        <th>Owner</th>
+                        <th>Policies</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for virtual_key, item in api_keys.items() %}
+                    <tr>
+                        <td>
+                            <code>{{ virtual_key }}</code>
+                        </td>
+
+                        <td>
+                            {{ item.provider }}
+                        </td>
+
+                        <td>
+                            {{ item.status }}
+                        </td>
+
+                        <td>
+                            {{ item.owner }}
+                        </td>
+
+                        <td>
+                            IP:
+                            {{ item.policy.ip_validation_enabled }}
+                            {{ item.policy.allowed_ip_ranges }}
+                            <br><br>
+
+                            JA3:
+                            {{ item.policy.ja3_validation_enabled }}
+                            {{ item.policy.allowed_ja3 }}
+                            <br><br>
+
+                            JA4:
+                            {{ item.policy.ja4_validation_enabled }}
+                            {{ item.policy.allowed_ja4 }}
+                            <br><br>
+
+                            Country:
+                            {{ item.policy.country_validation_enabled }}
+                            {{ item.policy.allowed_countries }}
+                        </td>
+
+                        <td>
+                            <div class="actions">
+                                <a
+                                    class="secondary-button"
+                                    href="/api-keys/{{ virtual_key }}/edit"
+                                >
+                                    Edit
+                                </a>
+
+                                <form
+                                    class="inline-form"
+                                    method="post"
+                                    action="/api-keys/{{ virtual_key }}/delete"
+                                    onsubmit="return confirm('Delete this API key record? This removes the CMS mapping but does not delete the Secret Manager secret.');"
+                                >
+                                    <button class="danger-button" type="submit">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    {% if api_keys|length == 0 %}
+                    <tr>
+                        <td colspan="6">
+                            No API keys configured yet.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <script>
+        function showAddApiKeyForm() {
+            document
+                .getElementById("addApiKeyCard")
+                .classList
+                .remove("hidden");
+        }
+
+        function hideAddApiKeyForm() {
+            document
+                .getElementById("addApiKeyCard")
+                .classList
+                .add("hidden");
+        }
+
+        function togglePolicyField(
+            checkbox,
+            bodyId
+        ) {
+            const body =
+                document.getElementById(bodyId);
+
+            if (checkbox.checked) {
+                body.style.display = "block";
+            } else {
+                body.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
