@@ -2,7 +2,7 @@
 
 ### *Root-Cause Analysis and Runtime Security Architecture for Workloads and AI Agents*
 
-`1.0.2026.07.20`  
+`1.0.2026.07.22`  
 `info@ztunion.com`
 
 ---
