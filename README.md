@@ -4,11 +4,7 @@
 ZAF Willamette is released under the terms in [LICENSE.md](LICENSE.md), with
 patent use restrictions set out in [PATENT NOTICE.md](PATENT%20NOTICE.md).
 
-ZAF Willamette securely holds provider credentials and mediates their use at
-the point of each request.
-
 ## Description
-
 ZAF Willamette is a reference implementation of the Zero Trust Access
 Fabric (ZAF) last-mile access authorization framework, provided to
 ground the architecture in working code. It is explicitly scoped as
