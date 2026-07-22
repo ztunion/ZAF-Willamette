@@ -4,8 +4,8 @@
 ZAF Willamette is released under the terms in [LICENSE.md](LICENSE.md), with
 patent use restrictions set out in [PATENT NOTICE.md](PATENT%20NOTICE.md).
 
-ZAF Willamette provides managed virtual API keys and request inspection for
-supported AI service providers.
+ZAF Willamette securely holds provider credentials and mediates their use at
+the point of each request.
 
 ## Description
 
