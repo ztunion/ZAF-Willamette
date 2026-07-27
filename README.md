@@ -1,7 +1,8 @@
 # ZAF Willamette
 
-ZAF Willamette provides managed credential escrow, request interception, and
-point-of-use credential substitution for supported AI service providers.
+Zero Trust Access Fabric (ZAF) provides managed credential escrow, request
+interception, and point-of-use credential substitution for supported AI
+service providers.
 
 ZAF Willamette is a reference implementation of the Zero Trust Access
 Fabric (ZAF) last-mile access authorization framework, provided to
