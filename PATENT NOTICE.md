@@ -3,7 +3,7 @@ This software, together with its associated documentation (collectively, the “
 
 
 ## Commercial Use
-Commercial use of the Software or technology covered by ZTUnion LLC’s patentrights requires a commercial patent license.
+Commercial use of the Software or technology covered by ZTUnion LLC’s patent rights requires a commercial patent license.
 
 For purposes of this notice, “commercial use” includes use of the Software, or any product or service incorporating or derived from it, for a commercial or for-profit purpose, whether by or on behalf of an individual, for-profit entity, non-profit entity, academic institution, or governmental entity, including without limitation any of the following:
 
