@@ -14,7 +14,7 @@ their own authenticators using different signals entirely. For
 background on the full ZAF model, see
 [Introduction to ZAF.md](Introduction%20to%20ZAF.md). For a comprehensive
 view of last-mile authorization, see From Complete Mediation to Last-Mile
-Authorization [last-mile-authorization.md](last-mile-authorization.md).
+Authorization ([last-mile-authorization.md](last-mile-authorization.md)).
 
 Applications use a virtual API key instead of storing a real provider key.
 The MITM Proxy intercepts the outbound request, sends the virtual key and
