@@ -171,7 +171,7 @@ Last-mile authorization builds on that idea and asks more at execution time: is 
 
 # 3\. Enforcement Placement and Timing
 
-Security architectures place authorization checks at different boundaries and at different times relative to the action they control. The table groups access-control models, mechanisms, protocols, and architectures by where and when they check, not by type. The timing column asks: when is authority established, compared with the specific action that will use it?
+Security architectures check authorization at different boundaries and at different times relative to the action they control. The table below lists common access-control models, mechanisms, protocols, and architectures, and compares them by where they check and when. The timing column shows when authority is established relative to the specific action that will use it.
 
 | Control | What it adds | Typical boundary | Timing relative to the specific action | Representative implementations |
 | :---- | :---- | :---- | :---- | :---- |
