@@ -293,7 +293,7 @@ On February 21, 2025, Bybit began a scheduled transfer of Ether from its multisi
 
 Every identity and credential check passed. The signers were who they claimed to be, their keys were genuine, and the multisignature threshold did what it was built to do. No check covered the relationship between the transaction the signers were shown and the transaction they signed. The approval was bound to a display, not to the action (§9.3), and the basis for approval was false (§9.4). The quorum added no independence, because every signer relied on the same interface (§9.2).
 
-A last-mile check would sit where the attackers could not reach it, on the signing device or in the wallet contract, and refuse a cold-wallet transaction that changes the contract’s implementation or pays anything other than the designated hot wallet. The public record does not show that such a restriction was declared; it is the check the case calls for, not one that failed.
+Nothing in the public record shows that Bybit had such a rule. This is the check that was missing.
 
 ## 6.4 OpenAI–Hugging Face 2026: Enforcement Was Not Uniform Across Paths
 
