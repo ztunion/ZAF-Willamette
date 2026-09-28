@@ -283,7 +283,7 @@ In April 2022, GitHub reported a sequence that illustrates both axes in §5. Usi
 
 Heroku’s subsequent incident review reported that the attacker had obtained access to a Heroku database containing customer GitHub integration OAuth tokens and that the initial Heroku compromise involved a token for a Heroku machine account \[38\].
 
-The case shows the gap between granting permissions and forming the action that uses them. The stolen tokens were not approval for one planned repository operation; they carried earlier permissions into targets and actions chosen later. Holding a valid token made those permissions usable; it did not authorize the attacker to use them.
+Each token was issued so the Heroku or Travis CI integration could do its work, but it reached every repository its user could access, not only the ones the integration needed. Once stolen, it let the attacker choose targets after the fact, and the token's permissions covered them.
 
 Heroku later stated that it intended to explore more granular repository privileges through the GitHub App model and OAuth protections based on RFC 8705 mutual TLS and private-key protection \[38\]. Shorter lifetimes, rotation, narrower scopes, and sender constraints reduce exposure, but on their own they do not show whether a particular repository action chosen later is authorized by the workflow, the delegation, and the current state.
 
