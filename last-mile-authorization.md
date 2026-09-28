@@ -372,7 +372,7 @@ Each criterion catches a failure the others would miss. C1–C9 fall into three 
 
    3. **Failure behavior** (C8): A check can fail open. When evaluation or required evidence is unavailable, the action must be refused.
 
-   4. C9, Execution evidence. A check can leave no record of what ran. Trusted evidence must connect the decision to the operation that executed.
+   4. **Execution evidence** (C9): A check can leave no record of what ran. Trusted evidence must connect the decision to the operation that executed.
 
 4. Across all groups:
 
