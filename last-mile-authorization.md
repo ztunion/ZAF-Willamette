@@ -2,11 +2,11 @@
 
 *Security model and assessment criteria for automation and AI agents*
 
-**Version 1.0** · September 27, 2026 · Release v1.0
+**Version 1.0** · September 27, 2026
 
-Michael Pak, ZTUnion LLC · michael@ztunion.com
+Michael Pak · michael@ztunion.com
 
-© 2026 Michael Pak. Licensed under CC BY 4.0. This license covers the text; it grants no rights under any patent.
+© 2026 ZTUNION LLC. All rights reserved.
 
 # Abstract
 
