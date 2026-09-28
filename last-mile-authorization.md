@@ -344,9 +344,9 @@ At Bangladesh Bank, according to BAE's analysis, the attackers controlled the ho
 
 # 7\. Contribution
 
-As §4 argues, the controls this paper requires already exist, and each property in §9 names its precedents. Precedents establish the design principle, not whether a particular deployment's action is authorized.
+As §4 argues, the controls this paper requires already exist. What is missing is a way to check whether a particular deployment applies them to a particular action.
 
-This paper offers a way to check whether one kind of important action is properly authorized, on every path that can carry it out. The paper calls this an action/effect conformance profile. The check uses ten criteria, C1 to C10. Each criterion names one thing that must be true for the action to count as authorized, and each comes with tests that can show when it isn't. The criteria are judged together, under the same rules and conditions. Section 9 explains the criteria, §10 walks through an example of changing a DNS record, and §11 explains how to test them, what to record, and how to track results over time.
+This paper offers that check: a way to test whether one kind of important action is properly authorized, on every path that can carry it out. The paper calls this an *action/effect conformance profile*. The check uses ten criteria, C1 to C10. Each criterion names one thing that must be true for the action to count as authorized, and each comes with tests that can show when it isn't. The criteria are judged together, under the same rules and conditions. Section 9 explains the criteria and the earlier work each builds on, §10 walks through an example of changing a DNS record, and §11 explains how to test them, what to record, and how to keep results current.
 
 Each criterion catches a failure the others would miss. C1–C9 fall into three groups, and C10 cuts across them.
 
