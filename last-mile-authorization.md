@@ -376,7 +376,7 @@ Each criterion catches a failure the others would miss. C1–C9 fall into three 
 
 4. Across all groups:
 
-   1. **Declared restrictions** (C10): A check can ignore a declared rule. Once the inputs under C3–C7 are correctly available, the effective decision must enforce the declared restrictions.
+   1. **Declared restrictions** (C10): A check can have all the right facts (C3–C7) and still apply the wrong rule: a condition lost when the policy was converted, a range written too wide, or another rule that allows the action anyway. Having the right facts is not enough; the decision that actually lets the action run must follow the declared rules.
 
 One incident can involve several criteria, because the criteria describe stages where things go wrong. When a single defect touches more than one criterion, §9.10 says which one it counts against, so it isn't counted twice. The ten criteria don't cover every possible authorization failure. If an in-scope failure fits none of them, the set should be extended.
 
