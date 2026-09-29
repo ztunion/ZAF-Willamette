@@ -502,7 +502,7 @@ The basis for this property follows.
 
 ## 9.3 Exact-Action, Audience, and State Binding
 
-An approval must cover the exact action that runs. Approving who is calling, which tool, which endpoint, or a general type of operation is not enough. This property says what an approval must be tied to; §9.6 says whether an approval is still good for a particular use.
+An approval must cover the exact action that runs. Approving only the caller, the tool, the endpoint, or the general type of operation leaves the action itself unapproved. This property says what an approval must be tied to; freshness (§9.6) says whether an approval is still valid when it is used, for example after it expires, is revoked, or has already been used.
 
 Tie the approval to every detail that could change the result. Depending on the action, that can include:
 
