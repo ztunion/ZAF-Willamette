@@ -441,7 +441,7 @@ This section sets out ten properties that an authorized action must have, one fo
 
 ### 9.1.1 What Coverage Requires
 
-*Non-bypassable* means there is no way around the check. Every path inside the system boundary that can produce the protected effect must go through a check as strong as the one the claim relies on: the same rules, the same trusted facts, and the same behavior when something fails. A path that does is covered; a path with a weaker check, or none, is not.
+*Non-bypassable* means there is no way around the check. Every path inside the system boundary that can produce the protected effect must go through a check as strong as the one the claim relies on: the same rules, the same trusted facts, and the same behavior when something fails. A path that does is covered; a path with a weaker check or no check is not."
 
 In the DNS example, suppose the workload's API calls pass through a gateway that allows `www.example.com` to point only at addresses in the approved failover pool, `203.0.113.0/24`. If an on-call engineer's console session, signed in with an administrator role, can point the same record at `198.51.100.7` with no such check, the console path is not covered, and the coverage claim for that record is falsified.
 
