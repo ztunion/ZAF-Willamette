@@ -435,7 +435,7 @@ Independence is about who controls the check, not where it sits. The check can b
 
 # 9\. Required Security Properties
 
-This section sets out ten properties that an authorized action must have, one for each stage where its authorization can fail; the cases in §6 show several of them in practice. The properties can overlap; when one defect touches two of them, §9.10.4 says which one it counts against. Each property states its requirement first, then its consequence for the DNS example, the prior work it builds on, evidence that it fails in practice, the known weaknesses (CWE entries) that describe that failure, and, where available, how the weakness catalogs record it. Tools named under each property are examples, not requirements.
+This section sets out ten properties that an authorized action must have, one for each stage where its authorization can fail. Each property's entry gives its requirement, its consequence for the DNS example, the prior work it builds on, evidence that it fails in practice, and the CWE entries that describe the failure. Tools named are examples, not requirements.
 
 ## 9.1 Non-Bypassable Mediation and Coverage Validation
 
