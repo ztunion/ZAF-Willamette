@@ -697,7 +697,7 @@ Across §§9.7.1–9.7.4, missing or lost state and uncoordinated use of an allo
 
 The basis for this property follows.
 
-* **DNS consequence:** the next change depends on earlier changes and denials; data read during remediation must not leave through a later, otherwise permitted connector action.
+* **DNS consequence:** the workload's next DNS change is refused if the incident has already reached its limit of three automated changes in fifteen minutes, or if that address was already denied. And secrets from the incident logs must not leave through a later chat post, even though the workload may otherwise post to chat.
 
 * **Precedent:** the Bell-LaPadula `*-property`, which forbids writing data down to a lower classification \[71\]; Denning's lattice model of information flow \[72\]; Goguen and Meseguer's noninterference, the standard definition of secure information flow \[73\]; the Chinese Wall policy, under which past accesses determine later permissions \[74\]; and PSD2's cumulative limits on payments exempted from strong authentication \[45\].
 
