@@ -713,7 +713,16 @@ When part of the authorization system fails, the failure must not turn into perm
 
 Failing open, meaning letting an action through when the check cannot run, is convenient, since a blocked request is noticed at once and a silent bypass is not, and some systems offer it as a setting. Kubernetes, for example, can call an outside service, an admission webhook, to check or adjust the requests it is configured for before accepting them. In the current API, a request is rejected by default if that call fails or times out, but a setting called Ignore lets it proceed anyway \[78\]. Kubernetes recommends letting webhooks that adjust requests fail open, as long as a separate, required check validates the final request afterward, so that a skipped adjustment, even one that adds a security setting, is still caught \[79\]. Where a webhook is itself the authorization check, with no required check behind it, the same setting turns an outage into a bypass.
 
-Refusing on failure does not have to mean stopping everything. A system can stay available in safe ways: switch to a reduced mode of operation approved in advance; use a cached approval, but only while its scope, policy version, context, state assumptions, and freshness all remain valid; or route the action through another enforcement path that meets the same control objective. In the DNS example, if the decision service is down, a cached approval to point `www.example.com` at `203.0.113.55` can still be used once, before it expires and while the incident remains open, but a change to a new address cannot. Emergency override paths, known as break-glass paths, are also allowed, but they need their own approval process, a narrow scope, a record of who used them, time limits where practical, and regular testing, so they do not turn into permanent bypasses.
+Refusing on failure does not have to mean stopping everything. A system can stay available in four safe ways:
+
+* switch to a reduced mode of operation approved in advance;
+* use a cached approval, but only while its scope, policy version, context, state assumptions, and freshness all remain valid;
+* route the action through another enforcement path that meets the same control objective; or
+* require approval from a quorum of independent validators, such as any two of three, so the check keeps working when one is down.
+
+In the DNS example, if the decision service is down, a cached approval to point `www.example.com` at `203.0.113.55` can still be used once, before it expires and while the incident remains open. A change to a new address cannot.
+
+Emergency override paths, known as break-glass paths, are also allowed. They need their own approval process, a narrow scope, a record of who used them, time limits where practical, and regular testing, so they do not turn into permanent bypasses.
 
 The basis for this property follows.
 
