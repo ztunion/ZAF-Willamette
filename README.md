@@ -8,23 +8,11 @@ effect. The real provider credential stays in managed escrow; the
 application never holds it, and ZAF substitutes it at the point of
 use only for a verified request.
 
-ZAF Willamette is a reference implementation of the ZAF framework, provided to
-ground the architecture in working code. It is explicitly scoped as
-an illustration of the model, not a canonical or production-complete
-implementation. It ships with a set of example authenticator signals
-chosen to demonstrate the pattern; implementors can create and register
-their own authenticators using different signals entirely. For
-background on the full ZAF model, see
-[Introduction to ZAF.md](Introduction%20to%20ZAF.md).
+ZAF Willamette is a reference implementation of ZAF, provided to ground the architecture in working code. It is explicitly scoped as an illustration of the model, not a canonical or production-complete implementation. It ships with a set of example authenticator signals, used to verify requests and chosen to demonstrate the pattern; implementors can create and register their own authenticators using different signals entirely. For background on the full ZAF model, see Introduction to ZAF [Introduction to ZAF.md](Introduction%20to%20ZAF.md).
 
-For a comprehensive view of last-mile authorization, see From Complete Mediation to Last-Mile
-Authorization ([last-mile-authorization.md](last-mile-authorization.md)).
+For a comprehensive view of last-mile authorization, see From Complete Mediation to Last-Mile Authorization ([last-mile-authorization.md](last-mile-authorization.md)).
 
-Applications use a virtual API key instead of storing a real provider key.
-The MITM Proxy intercepts the outbound request, sends the virtual key and
-request metadata to the CMS gRPC Service, receives the corresponding real
-provider credential, replaces the virtual credential, and forwards the
-request to the provider.
+In this reference implementation, applications use a virtual API key instead of storing a real provider key. The MITM Proxy intercepts the outbound request and sends the virtual key and request metadata to the CMS gRPC Service. Only if the request is verified does the CMS return the corresponding real provider credential; the proxy replaces the virtual key with it and forwards the request to the provider. An unverified request never reaches the provider.
 
 
 ## License
