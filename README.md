@@ -12,7 +12,7 @@ ZAF Willamette is a reference implementation of ZAF, provided to ground the arch
 
 For a comprehensive view of last-mile authorization, see From Complete Mediation to Last-Mile Authorization ([last-mile-authorization.md](last-mile-authorization.md)).
 
-In this reference implementation, applications use a virtual API key instead of storing a real provider key. The MITM Proxy intercepts the outbound request and sends the virtual key and request metadata to the Credential Management Service (CMS) gRPC Service. Only if the request is verified does CMS return the corresponding real provider credential; the proxy replaces the virtual key with it and forwards the request to the provider. An unverified request never reaches the provider.
+In this reference implementation, applications use a virtual API key instead of storing a real provider key. The MITM Proxy intercepts the outbound request and sends the virtual key and request metadata to the Credential Management Service (CMS) gRPC service. Only if the request is verified does the CMS return the corresponding real provider credential; the proxy replaces the virtual key with it and forwards the request to the provider. An unverified request never reaches the provider.
 
 
 ## License
