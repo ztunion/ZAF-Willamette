@@ -1,11 +1,14 @@
 # ZAF Willamette
 
-Zero Trust Access Fabric (ZAF) provides managed credential escrow, request
-interception, and point-of-use credential substitution for supported AI
-service providers.
+Zero Trust Access Fabric (ZAF) is designed to enforce last-mile
+complete mediation and credential protection for access to API and
+service providers. Each request is verified outside the requesting
+application against the credential owner’s approval before it takes
+effect. The real provider credential stays in managed escrow; the
+application never holds it, and ZAF substitutes it at the point of
+use only for a verified request.
 
-ZAF Willamette is a reference implementation of the Zero Trust Access
-Fabric (ZAF) last-mile access authorization framework, provided to
+ZAF Willamette is a reference implementation of the ZAF framework, provided to
 ground the architecture in working code. It is explicitly scoped as
 an illustration of the model, not a canonical or production-complete
 implementation. It ships with a set of example authenticator signals
