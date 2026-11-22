@@ -2,7 +2,7 @@
 
 ### *Root-Cause Analysis and Runtime Security Architecture for Workloads and AI Agents*
 
-`1.0.2026.07.22`  
+`1.1.2026.11.22`  
 `michael@ztunion.com`
 
 ---
@@ -13,13 +13,15 @@ Every zero trust architecture eventually runs into the same problem: something, 
 
 This is the **Secret Zero** problem: a complete, reusable credential held by a workload, integration, script, or agent at the end of an otherwise carefully architected trust chain. If that component is compromised, the credential may be copied and exercised independently of the original workload. This pattern has contributed to major breaches involving cloud workloads, embedded administrative secrets, third-party integrations, and machine identities. The risk is increasing as organizations connect more service accounts, microservices, and autonomous AI agents to sensitive systems.
 
-The Zero Trust Access Fabric (ZAF) is a runtime authorization architecture designed to eliminate this problem at the root, instead of managing around it. The question isn't how to better protect the secret the client holds. It's why the client needs to hold the secret at all. ZAF's answer, embodied in a patented system, is to separate proof of entitlement from possession of the credential itself. Most organizations can adopt ZAF without refactoring existing clients or servers. This paper covers the architecture, the problem it solves, and why that separation matters for anyone securing machine-to-machine access at scale.
+The Zero Trust Access Fabric (ZAF) is a runtime authorization architecture designed to eliminate this problem at the root, instead of managing around it. The question isn't how to better protect the secret the client holds. It's why the client needs to hold the secret at all. ZAF's answer, embodied in a patented system, is to separate proof of entitlement from possession of the credential itself. Because the client never holds the credential, every use of it passes through ZAF and is authorized per request. This is complete mediation, enforced at the last mile between the client and the downstream service.Most organizations can adopt ZAF without refactoring existing clients or servers. This paper covers the architecture, the problem it solves, and why that separation matters for anyone securing machine-to-machine access at scale.
 
 # **The Problem: Secret Zero and the Limits of Current Approaches**
 
 ## **A sixty-year-old problem**
 
 The tension between shared access and individual accountability isn't new. MIT's Compatible Time-Sharing System (CTSS), built under Fernando Corbató and first demonstrated in 1961, is widely credited as the first computer system to use passwords, a way to let multiple people share one machine while keeping each person's files separate \[1\]. It worked well enough for its era, and it set a pattern that's still in place today: a secret string, presented once, treated afterward as proof of identity. Six decades later, machine-to-machine access at internet scale still runs on a version of the same idea, and the underlying assumption, that whoever holds the credential is who they say they are, has never really been fixed, just patched around.
+
+In 1975, Saltzer and Schroeder named the principle this pattern violates. Complete mediation requires that every access to every object be checked for authority [18]. Most downstream services do check the credential on each request, but they check only the credential: not who presents it, or whether its owner intended that request. Possession stands in for authority, so the check that matters happens once, when the credential is issued, and every later use rides on it.
 
 ## **Why reusable credentials keep failing**
 
@@ -149,7 +151,7 @@ It's easiest to see the model concretely by walking through a single access requ
 
 5. **Proxy completes the call.** The CMS hands the credential to the proxy, which uses it to complete the actual downstream request, in the exact format the destination already expects. The plaintext credential is never returned to the client and does not persist after use.
 
-The result: at no point in this flow does the client hold anything an attacker could reuse.
+The result: at no point in this flow does the client hold anything an attacker could reuse. Because the credential exists in usable form only after the CMS reconstructs it for an authorized request, no request made with a ZAF-registered credential can reach the downstream service without passing this check. That is complete mediation at the last mile.
 
 This is a high-level view of the model. The specific authenticators, policy thresholds, and validation methods an organization configures can be adapted to different security targets and deployment contexts. One related capability is worth flagging as out of scope here: a more decentralized way of generating the underlying key shares, where no single party, not even the CMS, ever holds the complete picture, even briefly during setup. That's a stronger trust guarantee than the centralized approach described above, at the cost of meaningfully more implementation complexity, a tradeoff organizations can weigh based on their own risk tolerance.
 
@@ -232,3 +234,5 @@ Timing matters too. Non-human identities, including service accounts, CI/CD pipe
 \[16\] National Institute of Standards and Technology, Special Publication 800-57 Part 1 Revision 5, "Recommendation for Key Management: Part 1, General," https://doi.org/10.6028/NIST.SP.800-57pt1r5; and Special Publication 800-130, "A Framework for Designing Cryptographic Key Management Systems," https://doi.org/10.6028/NIST.SP.800-130
 
 \[17\] GitGuardian, "Identity Infrastructure: Why Credentials Are the Layer Directories Don't Secure," July 14, 2026\. https://blog.gitguardian.com/identity-infrastructure/
+
+\[18\] J. H. Saltzer and M. D. Schroeder, "The Protection of Information in Computer Systems," Proceedings of the IEEE, vol. 63, no. 9, pp. 1278–1308, 1975.
