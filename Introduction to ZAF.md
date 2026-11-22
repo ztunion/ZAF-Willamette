@@ -13,7 +13,7 @@ Every zero trust architecture eventually runs into the same problem: something, 
 
 This is the **Secret Zero** problem: a complete, reusable credential held by a workload, integration, script, or agent at the end of an otherwise carefully architected trust chain. If that component is compromised, the credential may be copied and exercised independently of the original workload. This pattern has contributed to major breaches involving cloud workloads, embedded administrative secrets, third-party integrations, and machine identities. The risk is increasing as organizations connect more service accounts, microservices, and autonomous AI agents to sensitive systems.
 
-The Zero Trust Access Fabric (ZAF) is a runtime authorization architecture designed to eliminate this problem at the root, instead of managing around it. The question isn't how to better protect the secret the client holds. It's why the client needs to hold the secret at all. ZAF's answer, embodied in a patented system, is to separate proof of entitlement from possession of the credential itself. Because the client never holds the credential, every use of it passes through ZAF and is authorized per request. This is complete mediation, enforced at the last mile between the client and the downstream service.Most organizations can adopt ZAF without refactoring existing clients or servers. This paper covers the architecture, the problem it solves, and why that separation matters for anyone securing machine-to-machine access at scale.
+The Zero Trust Access Fabric (ZAF) is a runtime authorization architecture designed to eliminate this problem at the root, instead of managing around it. The question isn't how to better protect the secret the client holds. It's why the client needs to hold the secret at all. ZAF's answer, embodied in a patented system, is to separate proof of entitlement from possession of the credential itself. Because the client never holds the credential, every use of it passes through ZAF and is authorized per request. This is complete mediation, enforced at the last mile between the client and the downstream service. Most organizations can adopt ZAF without refactoring existing clients or servers. This paper covers the architecture, the problem it solves, and why that separation matters for anyone securing machine-to-machine access at scale.
 
 # **The Problem: Secret Zero and the Limits of Current Approaches**
 
@@ -21,7 +21,8 @@ The Zero Trust Access Fabric (ZAF) is a runtime authorization architecture desig
 
 The tension between shared access and individual accountability isn't new. MIT's Compatible Time-Sharing System (CTSS), built under Fernando Corbató and first demonstrated in 1961, is widely credited as the first computer system to use passwords, a way to let multiple people share one machine while keeping each person's files separate \[1\]. It worked well enough for its era, and it set a pattern that's still in place today: a secret string, presented once, treated afterward as proof of identity. Six decades later, machine-to-machine access at internet scale still runs on a version of the same idea, and the underlying assumption, that whoever holds the credential is who they say they are, has never really been fixed, just patched around.
 
-In 1975, Saltzer and Schroeder named the principle this pattern violates. Complete mediation requires that every access to every object be checked for authority [18]. Most downstream services do check the credential on each request, but they check only the credential: not who presents it, or whether its owner intended that request. Possession stands in for authority, so the check that matters happens once, when the credential is issued, and every later use rides on it.
+In 1975, Saltzer and Schroeder named the principle this pattern violates. Complete mediation requires that every access to every object be checked for authority
+\[18\]. Most downstream services do check the credential on each request, but they check only the credential: not who presents it, or whether its owner intended that request. Possession stands in for authority, so the check that matters happens once, when the credential is issued, and every later use rides on it.
 
 ## **Why reusable credentials keep failing**
 
@@ -235,4 +236,4 @@ Timing matters too. Non-human identities, including service accounts, CI/CD pipe
 
 \[17\] GitGuardian, "Identity Infrastructure: Why Credentials Are the Layer Directories Don't Secure," July 14, 2026\. https://blog.gitguardian.com/identity-infrastructure/
 
-\[18\] J. H. Saltzer and M. D. Schroeder, "The Protection of Information in Computer Systems," Proceedings of the IEEE, vol. 63, no. 9, pp. 1278–1308, 1975.
+\[18\] J. H. Saltzer and M. D. Schroeder, "The Protection of Information in Computer Systems," *Proceedings of the IEEE*, vol. 63, no. 9, pp. 1278–1308, 1975.
