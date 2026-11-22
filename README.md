@@ -23,7 +23,10 @@ and only for a verified request. Every request that uses the credential goes thr
 This is how ZAF delivers complete mediation. When an agent makes a wrong decision or is manipulated,
 it can use the credential only for what the owner authorized.
 
-ZAF Willamette is a reference implementation of ZAF, provided to ground the architecture in working code. It is explicitly scoped as an illustration of the model, not a canonical or production-complete implementation. It ships with a set of example authenticator signals, used to verify requests and chosen to demonstrate the pattern; implementors can create and register their own authenticators using different signals entirely. For background on the full ZAF model, see Introduction to ZAF ([Introduction to ZAF.md](Introduction%20to%20ZAF.md)).
+ZAF Willamette is a reference implementation of ZAF, built to show the architecture in working code.
+It includes example authenticators that verify each request. Implementors can create and register their own
+authenticators and add their own validation of request parameters. For background on the full ZAF model,
+see Introduction to ZAF ([Introduction to ZAF.md](Introduction%20to%20ZAF.md)).
 
 For a comprehensive view of last-mile authorization, see From Complete Mediation to Last-Mile Authorization ([last-mile-authorization.md](last-mile-authorization.md)).
 
