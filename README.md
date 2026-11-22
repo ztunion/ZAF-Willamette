@@ -1,12 +1,27 @@
 # ZAF Willamette
 
-Zero Trust Access Fabric (ZAF) is designed to enforce last-mile
-complete mediation and credential protection for access to API and
-service providers. Each request is verified outside the requesting
-application against the credential owner’s approval before it takes
-effect. The real provider credential stays in managed escrow; the
-application never holds it, and ZAF substitutes it at the point of
-use only for a verified request.
+Zero Trust Access Fabric (ZAF) is a framework designed to enforce last-mile complete mediation and
+credential protection for access to API and service providers.
+
+Complete mediation means every access to a resource is checked for authority when it happens.
+Most API access falls short of this. Applications typically use bearer credentials such as API keys
+and OAuth access tokens. The provider checks the credential on each request, but not who presents
+it or whether the owner intended that request. Possession is authority: anyone holding
+the credential can use its full scope, whether that's the application, a compromised dependency,
+or an attacker who stole it.
+
+AI agents make this worse. An agent decides at runtime which calls to make, chains calls across providers,
+sometimes makes wrong decisions, and can be manipulated through prompt injection. Its requests can't be
+fully known in advance, so each one has to be authorized when it is made.
+
+ZAF is designed to act as the security gatekeeper for API requests. It sits at the last mile, between
+the application or agent and the provider. Each request is verified outside the application against
+what the credential owner has authorized, and only a verified request takes effect. The real provider 
+redential stays in managed escrow. The application holds only a virtual credential,
+so the real one can't be stolen from it. ZAF substitutes the real credential at the point of use,
+and only for a verified request. Every request that uses the credential goes through ZAF.
+This is how ZAF delivers complete mediation. When an agent makes a wrong decision or is manipulated,
+it can use the credential only for what the owner authorized.
 
 ZAF Willamette is a reference implementation of ZAF, provided to ground the architecture in working code. It is explicitly scoped as an illustration of the model, not a canonical or production-complete implementation. It ships with a set of example authenticator signals, used to verify requests and chosen to demonstrate the pattern; implementors can create and register their own authenticators using different signals entirely. For background on the full ZAF model, see Introduction to ZAF ([Introduction to ZAF.md](Introduction%20to%20ZAF.md)).
 
