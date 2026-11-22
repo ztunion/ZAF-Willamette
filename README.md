@@ -65,7 +65,7 @@ requests.
                                 | Create keys and policies
                                 v
 +----------------+      +-------+--------+      +-------------------+
-| Demo Client or | ---> | MITM Proxy    | ---> | AI Provider API   |
+| Demo Client or | ---> | MITM Proxy     | ---> | AI Provider API   |
 | Application    |      +-------+--------+      +-------------------+
 +----------------+              |
                                 | Resolve virtual key
