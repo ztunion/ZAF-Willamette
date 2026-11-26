@@ -3,7 +3,7 @@
 <br>
 <br>
 
-# **Executive Summary**
+## **Executive Summary**
 
 Every zero trust architecture eventually runs into the same problem: something, somewhere, has to hold a real credential. Service meshes authenticate workloads. API gateways enforce policy at the edge. Identity providers issue tokens. But when a client (a service, script, or AI agent) actually calls a downstream system, it typically holds a complete, reusable access credential: an API key, OAuth token, SSH private key, database password, or service-account secret. These credentials don't all work the same way, but if one is stolen, the attacker may be able to exercise the authority it represents.
 
@@ -11,22 +11,22 @@ This is the **Secret Zero** problem: a complete, reusable credential held by a w
 
 The Zero Trust Access Fabric (ZAF) is a runtime authorization architecture designed to eliminate this problem at the root, instead of managing around it. The question isn't how to better protect the secret the client holds. It's why the client needs to hold the secret at all. ZAF's answer, embodied in a patented system, is to separate proof of entitlement from possession of the credential itself. Because the client never holds the credential, every use of it passes through ZAF and is authorized per request. This is complete mediation, enforced at the last mile between the client and the downstream service. Most organizations can adopt ZAF without refactoring existing clients or servers. This paper covers the architecture, the problem it solves, and why that separation matters for anyone securing machine-to-machine access at scale.
 
-# **The Problem: Secret Zero and the Limits of Current Approaches**
+## **The Problem: Secret Zero and the Limits of Current Approaches**
 
-## **A sixty-year-old problem**
+### **A sixty-year-old problem**
 
 The tension between shared access and individual accountability isn't new. MIT's Compatible Time-Sharing System (CTSS), built under Fernando Corbató and first demonstrated in 1961, is widely credited as the first computer system to use passwords, a way to let multiple people share one machine while keeping each person's files separate \[1\]. It worked well enough for its era, and it set a pattern that's still in place today: a secret string, presented once, treated afterward as proof of identity. Six decades later, machine-to-machine access at internet scale still runs on a version of the same idea, and the underlying assumption, that whoever holds the credential is who they say they are, has never really been fixed, just patched around.
 
 In 1975, Saltzer and Schroeder named the principle this pattern violates. Complete mediation requires that every access to every object be checked for authority
 \[18\]. Most downstream services do check the credential on each request, but they check only the credential: not who presents it, or whether its owner intended that request. Possession stands in for authority, so the check that matters happens once, when the credential is issued, and every later use rides on it.
 
-## **Why reusable credentials keep failing**
+### **Why reusable credentials keep failing**
 
 A bearer token can be used by whoever possesses and presents it. It doesn't require the holder to prove possession of separate cryptographic key material. API keys, passwords, and many OAuth access tokens work the same way in practice, even though they aren't all formally classified as bearer tokens. Other credentials, such as SSH private keys and proof-of-possession tokens, work differently, but they create a related custody risk: if an attacker obtains the means needed to use the credential, they may be able to exercise the authority assigned to the legitimate client.
 
 Whether the credential is an API key stored in a configuration file, an SSH private key on a compromised host, a database password in an environment variable, or an OAuth token taken from a build pipeline, the central problem is the same: the client holds a complete, directly usable credential that can be copied or misused after compromise.
 
-## **Why existing controls do not fully address the problem**
+### **Why existing controls do not fully address the problem**
 
 Organizations already use several effective controls to reduce credential and access risk: API gateways, outbound proxies and service-mesh egress gateways, dynamic-secret brokers, cloud IAM temporary credentials, attribute-based access control, certificate-bound and proof-of-possession tokens, and workload identity. Each addresses a different part of the problem: some strengthen identity, others shorten credential lifetime, restrict where a request can go, or keep a backend credential away from the original caller. These controls are valuable in their own right.
 
@@ -66,7 +66,7 @@ This distinction runs through Zero Trust guidance more broadly: friction narrows
 
 These controls, deployed correctly, meaningfully reduce risk. But none of them combines an opaque, workload-held reference; per-request authorization of both the caller and the action; quorum agreement from extensible, third-party-capable validators; brief, in-boundary credential reconstruction; a proxy designed to hold no standing credential; and independence from any single platform or third party. ZAF is built to provide exactly that combination, as the subsequent section explains.
 
-# **The stakes are rising with agentic AI**
+## **The stakes are rising with agentic AI**
 
 The problem is compounding as autonomous AI agents proliferate. Agents routinely need programmatic access to email, code repositories, financial systems, and internal tools, often stringing many of these calls together on their own, with no human reviewing each individual step before it happens. A single agent workflow might read an inbox, query a database based on what it finds there, and push a change to a deployment pipeline, all without a person in the loop between any of those steps. Each of those integration points is typically secured with a reusable credential, often an API key or OAuth token, and because it's rarely possible to predict in advance exactly which systems a given task will touch, the agent often holds standing access to all of them for as long as the broader task might require.
 
@@ -76,7 +76,7 @@ One recent industry survey found that 69% of enterprises running AI agents share
 
 Non-human identities are now frequently the majority identity class in modern environments, and architecturally, they're the least equipped to resist credential theft. Human logins carry decades of accumulated defenses layered on top of the base credential: multi-factor authentication, behavioral anomaly detection, session timeouts tied to actual user activity, and the option to simply ask a person to re-verify when something looks off. Nearly all of those defenses assume a human is available to notice something is wrong and respond to a prompt, which an agent can't do. It will complete a challenge-response or re-authentication step exactly the way it completes any other instruction, with no way to tell whether the instruction itself should be trusted.
 
-# **The Cost in Practice: Notable Credential-Related Incidents**
+## **The Cost in Practice: Notable Credential-Related Incidents**
 
 The Secret Zero problem is not theoretical. Major incidents have repeatedly shown what can happen when a workload, integration, script, or administrative component holds a complete credential that can be copied and reused independently. Other incidents involving stolen human or administrative credentials illustrate the broader related risk: once a system treats possession of a credential as sufficient authority, malicious use may be difficult to distinguish from legitimate access.
 
@@ -104,9 +104,9 @@ Non-human identities are multiplying far faster than the tooling meant to govern
 
 Agentic AI is repeating the same pattern, just faster than previous waves of technology did. Over sixty years, credentials have gotten shorter-lived, better-hashed, and more context-aware, but the industry still hasn't addressed the core question: whether the client needs to hold the credential at all. That's the assumption ZAF removes.
 
-# **The ZAF Approach: Separating Custody from Usage**
+## **The ZAF Approach: Separating Custody from Usage**
 
-## **The central idea**
+### **The central idea**
 
 ZAF's core move is to split the credential lifecycle into two roles that are almost always fused in conventional systems:
 
@@ -120,7 +120,7 @@ The client holds only an opaque credential reference, a handle with no cryptogra
 
 A Credential Management System (CMS), running inside a protected execution boundary, is the only component that reconstructs the real credential. It does so transiently: only after the client has established its entitlement and the specific request has been authorized, and only for immediate use by a proxy that completes the downstream call. The CMS and proxy operate within that boundary, where the plaintext credential stays protected in memory and is transmitted only to the intended downstream service over an authenticated, encrypted connection. The client never sees it, and it isn't retained after the request completes.
 
-## **Distributed, quorum-based validation**
+### **Distributed, quorum-based validation**
 
 ZAF does not trust a single validator to make this decision. Access to a credential requires a quorum of independent authenticators, weighted by trust level, to agree that the requesting client is what it claims to be and that the requested action is authorized.
 
@@ -134,7 +134,7 @@ Each authenticator independently validates the client and, if validation succeed
 
 This model also supports customer-developed and third-party authenticators. An organization can register additional authenticators (a custom device-posture check, a behavioral model, a partner-supplied attestation service) and assign each an appropriate role and trust weight within the quorum.
 
-# **How a Request Flows Through ZAF**
+## **How a Request Flows Through ZAF**
 
 It's easiest to see the model concretely by walking through a single access request:
 
@@ -152,7 +152,7 @@ The result: at no point in this flow does the client hold anything an attacker c
 
 This is a high-level view of the model. The specific authenticators, policy thresholds, and validation methods an organization configures can be adapted to different security targets and deployment contexts. One related capability is worth flagging as out of scope here: a more decentralized way of generating the underlying key shares, where no single party, not even the CMS, ever holds the complete picture, even briefly during setup. That's a stronger trust guarantee than the centralized approach described above, at the cost of meaningfully more implementation complexity, a tradeoff organizations can weigh based on their own risk tolerance.
 
-# **Where ZAF Fits**
+## **Where ZAF Fits**
 
 ZAF isn't a replacement for identity providers, service meshes, or API gateways. It's complementary to all of them, filling a gap they share. Identity providers establish who a caller is. Service meshes and gateways decide whether their traffic should be allowed. ZAF handles a narrower question underneath both: at the moment a credential is needed, who gets to hold it, and for how long?
 
@@ -168,7 +168,7 @@ This makes ZAF particularly relevant in four settings where the Secret Zero prob
 
 * Operational technology (OT) and legacy systems, where the runtime often can't support modern identity federation or run a local agent at all, but where network steering to a proxy typically doesn't require touching the device itself.
 
-# ** Credential Remediation Through Mediation
+## ** Credential Remediation Through Mediation
 
 Credential exposure detection finds credentials that have already leaked. Remediation closes the exposure, and that's where organizations stall. GitGuardian found that 64% of secrets leaked on public GitHub and confirmed valid in 2022 were still exploitable in January 2026 [11]. A common reason isn't that teams can't rotate a credential, but that they don't know what rotating it will break [11][19]. A credential may be used by services nobody documented, and replacing it means finding, changing, and redeploying every one of them.
 
@@ -179,7 +179,7 @@ The pass-through option described above also finds credentials that were never r
 Rotation then no longer requires changing clients. For a credential already under ZAF, clients hold only references, so the credential is replaced at the downstream service and re-split across the authenticators without the clients knowing. For an exposed credential that clients still hold directly, a new credential is issued at the downstream service and split across the authenticators, the value the clients already hold is registered as a reference to it, and the old credential is then revoked at the service. The clients keep sending the same value and need no change. Until that revocation, the old value still works directly against the service, so revocation follows registration immediately. After it, a leaked copy works only through the proxy, and only for a client that satisfies the required authenticators.
 
 
-# **Alignment with NIST and NSA Guidance**
+## **Alignment with NIST and NSA Guidance**
 
 NIST and NSA guidance support principles underlying ZAF, although neither prescribes the ZAF architecture.
 
@@ -195,19 +195,19 @@ NIST does not generally equate bearer access credentials with cryptographic keys
 
 Taken together, these publications provide a credible standards-based foundation for ZAF. The architecture applies established zero trust, machine-identity, and key-custody principles to downstream credential use: keeping reusable credentials out of workloads, mediating their use, and reauthorizing access at the point of request.
 
-# **The ZAF Willamette Reference Implementation**
+## **The ZAF Willamette Reference Implementation**
 
 To ground the architecture in working code, ZTUnion has released ZAF Willamette, a reference implementation of the ZAF model, under the BSD 3-Clause Clear License at `github.com/ztunion/ZAF-Willamette`.
 
 Willamette is explicitly scoped as an illustration of the ZAF model, not a canonical or production-complete implementation. It ships with a set of example authenticator signals (ASN, JA4 TLS fingerprint, IP CIDR range, country, and an allowed time window) chosen to demonstrate the pattern. Implementors can create and register their own authenticators using different signals entirely. These shipped signals are passive and contextual only. Willamette does not include the hardware-anchored active challenge-response path described earlier, under The ZAF Approach, and readers evaluating it as a benchmark of the full authorization model should account for that gap.
 
-# **Why ZAF Is Significant, and Where It Leads**
+## **Why ZAF Is Significant, and Where It Leads**
 
 ZAF targets the architectural root cause instead of adding another layer on top of it. Capital One, Uber, Salesloft Drift, and Klue all show what happens when a compromised workload, script, or integration holds a complete, reusable credential: it can be used again without any renewed proof that the original holder is still entitled to it. Existing mitigations reduce that risk by shortening credential lifetime, narrowing scope, or strengthening storage. ZAF takes the credential out of the workload entirely, mediates its use through a protected path, and reauthorizes each request before access completes. The proxy-based custody mechanism behind it has also been examined and found to be a novel, non-obvious invention, not just a pattern described in a white paper.
 
 Timing matters too. Non-human identities, including service accounts, CI/CD pipelines, and AI agents, are multiplying faster than the controls meant to govern them, and each one introduces another credential that can be stolen or misused. This is especially acute in the operational technology and legacy systems described above, where compromised credentials can affect not only data, but also operations, availability, and public safety. A solution designed only for human logins is already behind where the risk now sits. ZAF treats machine and agent identities as the primary case from the start.
 
-# **References**
+## **References**
 
 \[1\] MIT News, "Professor Emeritus Fernando Corbató, MIT computing pioneer, dies at 93," 2019\. https://news.mit.edu/2019/mit-professor-emeritus-fernando-corby-corbato-computing-pioneer-dies-0715
 
