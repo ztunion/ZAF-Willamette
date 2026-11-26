@@ -3,8 +3,6 @@
 ### *Root-Cause Analysis and Runtime Security Architecture for Workloads and AI Agents*
 
 `1.2.2026.11.23`  
-`michael@ztunion.com`
-
 ---
 
 # **Executive Summary**
@@ -249,4 +247,8 @@ Timing matters too. Non-human identities, including service accounts, CI/CD pipe
 
 \[18\] J. H. Saltzer and M. D. Schroeder, "The Protection of Information in Computer Systems," *Proceedings of the IEEE*, vol. 63, no. 9, pp. 1278–1308, 1975.
 
+##
+michael@ztunion.com
+<br>
+© 2026 ZTUnion LLC. All rights reserved.
 \[19\] The Hacker News (contributed by GitGuardian), "Credential Remediation Is Slow When You Don't Know What Will Break," November 25, 2026. https://thehackernews.com/2026/11/credential-remediation-is-slow-when-you.html
