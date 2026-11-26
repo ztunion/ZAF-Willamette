@@ -168,6 +168,7 @@ This makes ZAF particularly relevant in four settings where the Secret Zero prob
 
 * Operational technology (OT) and legacy systems, where the runtime often can't support modern identity federation or run a local agent at all, but where network steering to a proxy typically doesn't require touching the device itself.
 
+
 ## **Credential Remediation Through Mediation
 
 Credential exposure detection finds credentials that have already leaked. Remediation closes the exposure, and that's where organizations stall. GitGuardian found that 64% of secrets leaked on public GitHub and confirmed valid in 2022 were still exploitable in January 2026 [11]. A common reason isn't that teams can't rotate a credential, but that they don't know what rotating it will break [11][19]. A credential may be used by services nobody documented, and replacing it means finding, changing, and redeploying every one of them.
