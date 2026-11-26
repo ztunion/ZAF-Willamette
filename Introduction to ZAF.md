@@ -2,7 +2,7 @@
 
 ### *Root-Cause Analysis and Runtime Security Architecture for Workloads and AI Agents*
 
-`1.1.2026.11.22`  
+`1.2.2026.11.23`  
 `michael@ztunion.com`
 
 ---
@@ -172,6 +172,17 @@ This makes ZAF particularly relevant in four settings where the Secret Zero prob
 
 * Operational technology (OT) and legacy systems, where the runtime often can't support modern identity federation or run a local agent at all, but where network steering to a proxy typically doesn't require touching the device itself.
 
+# ** Credential Remediation Through Mediation
+
+Credential exposure detection finds credentials that have already leaked. Remediation closes the exposure, and that's where organizations stall. GitGuardian found that 64% of secrets leaked on public GitHub and confirmed valid in 2022 were still exploitable in January 2026 [11]. A common reason isn't that teams can't rotate a credential, but that they don't know what rotating it will break [11][19]. A credential may be used by services nobody documented, and replacing it means finding, changing, and redeploying every one of them.
+
+Complete mediation removes that uncertainty. Because every request using a ZAF-registered credential passes through the ZAF proxy, ZAF records which clients use each credential. That record shows what a rotation will affect before it happens, and IAM, application security, engineering, and DevOps teams work from the same record rather than separate partial views.
+
+The pass-through option described above also finds credentials that were never registered. As calls carrying them reach the downstream service, ZAF flags them and builds an inventory of the credentials in use and the clients using them. Enforcement can then be turned on one credential at a time, once all of that credential's clients are registered, so moving to enforcement doesn't require a single cutover.
+
+Rotation then no longer requires changing clients. For a credential already under ZAF, clients hold only references, so the credential is replaced at the downstream service and re-split across the authenticators without the clients knowing. For an exposed credential that clients still hold directly, a new credential is issued at the downstream service and split across the authenticators, the value the clients already hold is registered as a reference to it, and the old credential is then revoked at the service. The clients keep sending the same value and need no change. Until that revocation, the old value still works directly against the service, so revocation follows registration immediately. After it, a leaked copy works only through the proxy, and only for a client that satisfies the required authenticators.
+
+
 # **Alignment with NIST and NSA Guidance**
 
 NIST and NSA guidance support principles underlying ZAF, although neither prescribes the ZAF architecture.
@@ -237,3 +248,5 @@ Timing matters too. Non-human identities, including service accounts, CI/CD pipe
 \[17\] GitGuardian, "Identity Infrastructure: Why Credentials Are the Layer Directories Don't Secure," July 14, 2026\. https://blog.gitguardian.com/identity-infrastructure/
 
 \[18\] J. H. Saltzer and M. D. Schroeder, "The Protection of Information in Computer Systems," *Proceedings of the IEEE*, vol. 63, no. 9, pp. 1278–1308, 1975.
+
+\[19\] The Hacker News (contributed by GitGuardian), "Credential Remediation Is Slow When You Don't Know What Will Break," November 25, 2026. https://thehackernews.com/2026/11/credential-remediation-is-slow-when-you.html
