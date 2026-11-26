@@ -1,6 +1,7 @@
 # **A Zero Trust Framework for Last-Mile Access Authorization**
-
-### *Root-Cause Analysis and Runtime Security Architecture for Workloads and AI Agents* 
+#### *Root-Cause Analysis and Runtime Security Architecture for Workloads and AI Agents* 
+<br>
+<br>
 
 # **Executive Summary**
 
